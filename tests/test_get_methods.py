@@ -19,17 +19,9 @@ class TestGetMethods:
         print(endpoint)  # название ресурса
         print(expected_data)  # ожидаемые данные из JSON
 
-        url = f"{BASE_URL}/{endpoint}"
-        response = api_client.send_get_request(url)
+        response = api_client.send_get_resources_request(endpoint)
         Checking.check_status_code(response, 200)
         assert response.json() is not None
-
-    # TODO:
-    #  1) коммиты
-    #  2) requirements
-    #  3) подключить CI/CD
-    #  4) Сделать readme
-    #  5) спрятать ненужные проекты в гит
 
 
     def test_get_first_post(self, api_client):
