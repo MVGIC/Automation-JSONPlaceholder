@@ -1,4 +1,5 @@
 import allure
+import pytest
 
 from constants.url import BASE_URL
 from schemas.post import *
@@ -9,6 +10,7 @@ class TestForPosts:
 
     @allure.id("")
     @allure.title("")
+    @pytest.mark.smoke
     def test_get_all_posts(self, get_all_posts_fixture):
         """
 

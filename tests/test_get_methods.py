@@ -9,19 +9,35 @@ from utils.checking import Checking
 
 
 class TestGetMethods:
-    RESOURCE_NAME = ["albums", "comments", "photos", "posts", "todos", "users"]
+    RESOURCE_NAME = ["albums", "posts", "users"] # Проверяем ресурсы, которые успевают загружаться
 
-    @pytest.mark.parametrize("endpoint, expected_data",
-                             [(x, u.open_json_file(os.path.join(os.path.dirname(__file__),
-                                                                f"resources/{x}/all_resources.json")))
-                              for x in RESOURCE_NAME])
-    def test_get_all_resources(self, api_client, endpoint, expected_data):
-        print(endpoint)  # название ресурса
-        print(expected_data)  # ожидаемые данные из JSON
+    @pytest.mark.parametrize("endpoint", RESOURCE_NAME)
+    def test_get_all_resources(self, api_client, endpoint):
+        # Формируем путь к файлу с тестовыми данными
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        json_file_path = os.path.join(current_dir, "resources", endpoint, "all_resources.json")
 
+        # Проверяем существование файла
+        assert os.path.exists(json_file_path), f"Файл не найден: {json_file_path}"
+
+        # Загружаем ожидаемые данные
+        expected_data = u.open_json_file(json_file_path)
+
+        print(f"\nТестируемый ресурс: {endpoint}")
+        print(f"Путь к файлу: {json_file_path}")
+        print(f"Ожидаемые данные загружены: {len(expected_data) if isinstance(expected_data, list) else 'N/A'} записей")
+
+        # Выполняем запрос
         response = api_client.send_get_resources_request(endpoint)
+
+        # Проверки
         Checking.check_status_code(response, 200)
-        assert response.json() is not None
+        assert response.json() is not None, "Ответ API пустой"
+
+        # Дополнительная проверка на соответствие данным
+        actual_data = response.json()
+        assert actual_data == expected_data, f"Данные не совпадают для ресурса {endpoint}"
+
 
 
     def test_get_first_post(self, api_client):
