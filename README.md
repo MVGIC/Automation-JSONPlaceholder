@@ -57,7 +57,7 @@ pytest -n 4               # 4 процесса параллельно
 
 С отчётом Allure
 pytest --alluredir==test_results
-allure serve =test_results
+allure serve test_results
 ```
 
 📊 Отчёты

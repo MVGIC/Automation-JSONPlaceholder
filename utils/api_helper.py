@@ -10,7 +10,7 @@ class APIClient:
     def send_get_resources_request(self, endpoint):
         url = f"{self.base_url}/{endpoint}"
         print(f"Итоговый url = {url}")
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         return response
 
 
