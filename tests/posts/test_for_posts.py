@@ -8,18 +8,22 @@ from utils.checking import Checking
 
 class TestForPosts:
 
-    @allure.id("")
-    @allure.title("")
-    @pytest.mark.smoke
+    @allure.id("3")
+    @allure.title("Проверка получения информации о всех постах")
+    @pytest.mark.regression
+    @pytest.mark.api
     def test_get_all_posts(self, get_all_posts_fixture):
         """
-
-        :param get_all_posts_fixture:
-        :return:
+        Проверка получения информации о всех постах.
         """
-        with allure.step(""):
+        with allure.step("Получаем информацию о постах"):
             assert get_all_posts_fixture().assert_status_code(200).validate(PostBody)
 
+
+    @allure.id("4")
+    @allure.title("Проверка создания нового поста")
+    @pytest.mark.smoke
+    @pytest.mark.api
     def test_send_new_post(self, api_client):
         url = f"{BASE_URL}/posts"
         new_post = {

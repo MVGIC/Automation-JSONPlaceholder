@@ -1,5 +1,6 @@
 import os.path
 
+import allure
 import pytest
 
 import utils.utils as u
@@ -9,8 +10,12 @@ from utils.checking import Checking
 
 
 class TestGetMethods:
-    RESOURCE_NAME = ["albums", "posts", "users"] # Проверяем ресурсы, которые успевают загружаться
+    RESOURCE_NAME = ["albums", "posts", "users"]  # Проверяем ресурсы, которые успевают загружаться
 
+    @allure.id("1")
+    @allure.title("Проверка сравнения содержимого ресурсов между ответом сервера и локальными файлами")
+    @pytest.mark.smoke
+    @pytest.mark.api
     @pytest.mark.parametrize("endpoint", RESOURCE_NAME)
     def test_get_all_resources(self, api_client, endpoint):
         # Формируем путь к файлу с тестовыми данными
@@ -39,7 +44,10 @@ class TestGetMethods:
         assert actual_data == expected_data, f"Данные не совпадают для ресурса {endpoint}"
 
 
-
+    @allure.id("2")
+    @allure.title("Проверка получения информации о первом посте")
+    @pytest.mark.regression
+    @pytest.mark.api
     def test_get_first_post(self, api_client):
         url = f"{BASE_URL}/posts/1"
         response = api_client.send_get_request(url)
