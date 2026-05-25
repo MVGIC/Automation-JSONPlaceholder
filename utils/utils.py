@@ -1,5 +1,6 @@
 import json
 
+
 def open_json_file(path:str)->list[dict]:
     """
     Открытие файла
