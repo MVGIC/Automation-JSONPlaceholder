@@ -24,8 +24,6 @@ class Response:
         else:
             return schema.model_validate(self.response_json)
 
-
-
     def validate(self, schema):
         if isinstance(self.response_json, list):
             self.parsed_objects = [] # Сохраняем ВСЕ валидированные объекты
@@ -64,6 +62,10 @@ class Response:
 
     def get_parsed_object(self):
         return self.parsed_object
+
+    def is_empty_response(self):
+        """Проверяет, пустой ли пришел ответ"""
+        return not self.response or len(self.response) == 0
 
     def __str__(self):
         return \
