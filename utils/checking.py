@@ -2,20 +2,17 @@
 
 class Checking:
     """Методы для проверки ответов наших запросов"""
-
     @staticmethod
     def check_status_code(result, status_code):
         """Метод для проверки статус кода"""
-
-        assert result.status_code == status_code, "Ошибка! Статус код отличается от ожидаемого."
+        assert result.status_code == status_code, f"Ошибка! Статус код отличается от ожидаемого, вернулся статус код: {status_code}"
 
     @staticmethod
     def check_json_fields(result, expected_value):
         """Метод для проверки наличия обязательных полей в ответе запроса"""
-
         fields = result.json()
-        assert list(fields) == expected_value, "Ошибка!  Список полей не совпадает"
-        print(list(fields))
+        assert list(fields) == expected_value, f"Ошибка! Список полей не совпадает с ожидаемым, вернулись поля: {list(fields)}"
+        print(f"Cписок полей: {list(fields)}")
         print("Все поля присутствуют")
 
     @staticmethod
@@ -23,7 +20,7 @@ class Checking:
         """Метод для проверки значений обязательных полей в ответе запроса"""
         check = result.json()
         check_info = check.get(field_name)
-        assert check_info == expected_value, "Ошибка, значение поля не совпадает"
+        assert check_info == expected_value, f"Ошибка, значение поля не совпадает с ожидаемым, вернулось значение: {check_info}"
         print(f"Значение поля {field_name} верно!")
 
     @staticmethod
