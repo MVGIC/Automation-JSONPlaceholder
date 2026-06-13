@@ -3,6 +3,7 @@ from pytest import fixture
 
 from baseclasses.response import Response
 from constants.url import BASE_URL
+from generators.post import Post
 
 
 @fixture()
@@ -63,3 +64,8 @@ def get_first_user_posts_fixture():
 def get_first_user_posts():
     response = requests.get(url=f"{BASE_URL}/users/1/posts")
     return Response(response)
+
+
+@fixture()
+def get_post_generator():
+    return Post()

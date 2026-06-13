@@ -11,14 +11,9 @@ class TestForFirstPost:
     @allure.title("Проверка изменения первого поста")
     @pytest.mark.smoke
     @pytest.mark.api
-    def test_change_first_post(self, api_client):
+    def test_change_first_post(self, api_client, get_post_generator):
         url = f"{BASE_URL}/posts/1"
-        new_body = {
-            "userId": 2,
-            "id": 1,
-            "title": "new title",
-            "body": "new body"
-        }
+        new_body = get_post_generator.set_user_id(2).set_id(1).set_title("new title").set_body("new body").build()
         response = api_client.send_put_request(url, new_body)
         print(response.json())
         Checking.check_status_code(response, 200)

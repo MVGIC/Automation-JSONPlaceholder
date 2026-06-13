@@ -24,14 +24,9 @@ class TestForPosts:
     @allure.title("Проверка создания нового поста")
     @pytest.mark.smoke
     @pytest.mark.api
-    def test_send_new_post(self, api_client):
+    def test_send_new_post(self, api_client, get_post_generator):
         url = f"{BASE_URL}/posts"
-        new_post = {
-            "userId": 13,
-            "id": 1337,
-            "title": "new magic post",
-            "body": "test magic body"
-        }
+        new_post = get_post_generator.build()
         response = api_client.send_post_request(url, new_post)
         print(response.json())
         Checking.check_status_code(response, 201)

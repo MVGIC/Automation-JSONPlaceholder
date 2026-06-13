@@ -7,9 +7,6 @@ API_URL = "https://jsonplaceholder.typicode.com/"
 
 @pytest.fixture()
 def api_client():
-    """
-    Создать API для теста
-
-    """
+    """Создать API для теста"""
     client = APIClient()
     yield client
