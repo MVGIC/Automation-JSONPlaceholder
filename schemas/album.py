@@ -1,7 +1,12 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,ConfigDict
 
 
-class AlbumBody(BaseModel):
+# Запрещаем передачу в ответе лишний полей, которых нет в схеме
+class StrictModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+
+class AlbumBody(StrictModel):
     userId: int
     id: int
     title: str
